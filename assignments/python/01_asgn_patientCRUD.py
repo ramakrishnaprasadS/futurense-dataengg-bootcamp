@@ -16,11 +16,15 @@ while True:
         patientId=(input("Enter Patient ID: "))
 
         try:
-            mycursor=mycon.cursor()  
+            mycursor=conn.cursor()  
             mycursor.execute("SELECT * FROM patient pa INNER JOIN person pe ON pa.patientId=pe.personId WHERE patientId = '{}'".format(patientId))  
             result=mycursor.fetchall()
-            for i in result: 
-                print("\n Patient ID: {} \n SSN: {} \n DOB: {} \n Person Name: {} \n Gender: {}".format(i[0],i[1],i[2], i[4],i[6]))  
+            if result==[]:
+                print("No patient Found with this patientid")
+                continue
+            else:
+                for i in result: 
+                    print("\n Patient ID: {} \n SSN: {} \n DOB: {} \n Person Name: {} \n Gender: {}".format(i[0],i[1],i[2], i[4],i[6]))  
 
         except Exception as e:
             print(e)
