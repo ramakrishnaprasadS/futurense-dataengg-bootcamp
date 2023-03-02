@@ -1,0 +1,31 @@
+------- Weather Data Analysis with DataFrame API
+
+
+
+---a) Load Weather Dataset and create DataFrame
+df = spark.read.options(delimiter="#",inferSchema=True).text("/mnt/c/Users/miles/Documents/Github/futurense-dataengg-bootcamp/assignments/hive/02_asgn/weather_fine.txt")
+df=df.withColumnRenamed('_c1','dt')
+df=df.withColumnRenamed('_c5','max_temp')
+df=df.withColumnRenamed('_c6','min_temp')
+
+df.createOrReplaceTempView("weather")
+spark.sql("select * from weather limit 10").show()
+
+---b) Show Min and Max Temperature
+
+spark.sql("select min(min_temp) as mintemp,max(max_temp) as maxtemp from weather").show()
+
+
+----c) Show month wise Min and Max Temperature
+
+spark.sql("select month(dt) as month,max(max_temp) as max_temp,min(min_temp) as min_temp from weather group by monthname(dt)").show()
+
+
+
+
+
+
+
+
+
+

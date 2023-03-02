@@ -1,0 +1,38 @@
+
+
+df = spark.read.options(delimiter=";",header=True).csv("/home/ram/futurense_hadoop-pyspark/labs/dataset/bankmarket/bankmarketdata.csv")
+df.count()
+
+---py-sql
+
+    df.createOrReplaceTempView("bankmarketing")
+
+    spark.sql("select count(*) from bankmarketing").show()
+
+---2.Give marketing success rate. (No. of people subscribed / total no. of entries)
+
+    spark.sql("select sum(if(y='yes',1,0)) as no_of_subscribers,count(*) as total_entries,round((sum(if(y='yes',1,0))/count(*))*100,2) as success_rate from bankmarketing").show()
+
+--3.age category wise 
+
+    spark.sql("select case when age<13 then 'kids' when age>=13 and age<=19 then 'teenagers' when age>=20 and age<=30 then 'youngsters' when age>=31 and age<=50 then 'middle-agers' when age>50 then 'seniors' else 'NA' end as tpe ,count(*) as no_of_subscribers from bankmarketing where y='yes' group by tpe order by no_of_subscribers desc").show()
+
+---4.Maximum, Mean, and Minimum age of the average targeted customer
+
+    spark.sql("select max(age) as max_age_targeted,round(avg(age)) as mean_age_targeted,min(age) as min_age_targeted from bankmarketing").show()
+
+---5.Check the quality of customers by checking the average balance, median balance of customers
+
+    spark.sql("select round(avg(balance)) as avg_balance,percentile(balance,0.5) as median_balance,max(balance) as max_balance from bankmarketing").show()
+
+---6.Check if age matters in marketing subscription for deposit
+
+    spark.sql("select min(age) as min_age,percentile(age,0.5) as median_age,avg(age) as mean_age,max(age) as max_age from bankmarketing where y='yes'")
+
+---7.Check if marital status mattered for subscription to deposit.
+
+    spark.sql("select sum(if(marital='single',1,0)) as no_of_unmarried_subscribers,sum(if(marital='married',1,0)) as no_of_married_subscribers from bankmarketing where y='yes'")
+
+---8.Check if age and marital status together mattered for subscription to deposit scheme
+
+    spark.sql("select age,marital,count(*) as no_of_subscibers from bankmarketing where y='yes' group by age,marital order by no_of_subscibers desc limit 50")
