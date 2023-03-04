@@ -23,3 +23,5 @@ df1=spark.read.parquet("/mnt/c/Users/miles/Documents/Github/futurense-dataengg-b
 #displaying the data
 print(df1.show())
 
+
+
