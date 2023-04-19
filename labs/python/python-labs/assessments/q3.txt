@@ -1,0 +1,5 @@
+
+hadoop fs -put /mnt/c/Users/miles/Documents/Github/futurense-dataengg-bootcamp/labs/python/python-labs/assessments/movies1.csv /user/training/movie/
+
+hadoop fs -put /mnt/c/Users/miles/Documents/Github/futurense-dataengg-bootcamp/labs/python/python-labs/assessments/ratings.csv /user/training/movie/
+

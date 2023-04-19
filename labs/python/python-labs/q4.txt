@@ -1,0 +1,21 @@
+
+CREATE TABLE IF NOT EXISTS Movies (movie_id int, movie_name String, movie_genre String,yoR String)
+    COMMENT 'Employee details'
+    PARTITIONED BY (yoR String) CLUSTERED BY (movie_id) INTO 3 BUCKETS
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    LINES TERMINATED BY '\n'
+    STORED AS TEXTFILE;
+
+LOAD DATA  INPATH '/user/training/movie/movies.csv' OVERWRITE INTO TABLE Movies;
+
+CREATE TABLE IF NOT EXISTS Ratings (movie_id int,rating int)
+    COMMENT 'Employee details'
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    LINES TERMINATED BY '\n'
+    STORED AS TEXTFILE;
+
+LOAD DATA  INPATH '/user/training/movie/ratings.csv' OVERWRITE INTO TABLE Ratings;
+
+select 

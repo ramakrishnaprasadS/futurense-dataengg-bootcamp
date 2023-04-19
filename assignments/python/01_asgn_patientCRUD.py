@@ -24,6 +24,7 @@ while True:
                 continue
             else:
                 for i in result: 
+                    print(result)
                     print("\n Patient ID: {} \n SSN: {} \n DOB: {} \n Person Name: {} \n Gender: {}".format(i[0],i[1],i[2], i[4],i[6]))  
 
         except Exception as e:

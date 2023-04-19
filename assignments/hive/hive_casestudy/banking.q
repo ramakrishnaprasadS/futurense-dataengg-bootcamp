@@ -10,6 +10,8 @@ LINES TERMINATED BY '\n'
 LOCATION '/user/training/casestudy/bankmarketdata/';
 
 
+
+
 ---2.Give marketing success rate. (No. of people subscribed / total no. of entries)
 
 select sum(if(y="yes",1,0)) as no_of_subscribers,

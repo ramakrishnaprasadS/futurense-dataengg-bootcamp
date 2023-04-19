@@ -1,0 +1,21 @@
+
+CREATE TABLE IF NOT EXISTS movies (movieId int, title String, genre array<string>)
+COMMENT 'Movie details'
+PARTITIONED BY (YoR int) CLUSTERED BY (movieId) INTO 3 BUCKETS
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '|'
+STORED AS TEXTFILE
+TBLPROPERTIES ('skip.header.line.count' = '1');
+
+LOAD DATA INPATH '/user/training/movie/movies1.csv' OVERWRITE INTO TABLE movies;
+
+
+CREATE TABLE IF NOT EXISTS ratings (user_id int,movie_id int,rating float,timestmp timestamp)
+COMMENT 'Rating details'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+TBLPROPERTIES ('skip.header.line.count' = '1');
+
+LOAD DATA INPATH '/user/training/movie/ratings.csv' OVERWRITE INTO TABLE ratings;

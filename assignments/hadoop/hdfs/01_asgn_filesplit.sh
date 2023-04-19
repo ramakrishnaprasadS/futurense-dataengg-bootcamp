@@ -8,11 +8,12 @@ hadoop fs -put  ~/futurence_hadoop-pyspark/labs/dataset/weather /user/training/w
 #Display the weather data
 hadoop fs -cat /user/training/weather/weather_data.txt
 
-lines=wc -l ~/futurence_hadoop-pyspark/labs/dataset/weather/weather_data.txt
+lines=$(wc -l < ~/futurence_hadoop-pyspark/labs/dataset/weather/weather_data.txt)
+h1=`expr $lines / 2`
 
 #Split the weather data file and store as weather1 and wearther2
 
-awk 'NR<=500' ~/futurence_hadoop-pyspark/labs/dataset/weather/weather_data.txt > weather1.txt
+awk 'NR<=$h1' ~/futurence_hadoop-pyspark/labs/dataset/weather/weather_data.txt > weather1.txt
 awk 'NR>500' ~/futurence_hadoop-pyspark/labs/dataset/weather/weather_data.txt/weather_data.txt > weather2.txt
 
 # Put the files back into HDFS
